@@ -12,10 +12,11 @@ import {
   TableCell,
   Pagination,
 } from "carbon-components-react";
-
+// import Moment from 'moment';
 import { PatientEncounters } from "../Encounters/PatientEncounters";
 
 const _ = require("lodash");
+const moment = require("moment");
 
 const headers = [
   { header: "Type of Encounter", key: "display" },
@@ -26,8 +27,8 @@ const PatientInfo = (props) => {
   const [encounters, setEncounters] = useState([]);
   const [firstRowIndex, setFirstRowIndex] = useState(0);
   const [currentPageSize, setCurrentPageSize] = useState(5);
-
-  useEffect(()=>{
+  
+  useEffect(() => {
     const id = props.match.params.id;
     PatientEncounters(id).then((resp) => {
       const results = resp.map((patient) => {
@@ -35,7 +36,7 @@ const PatientInfo = (props) => {
           id: patient.uuid,
           uuid: patient.uuid,
           display: patient.display,
-          encounterDatetime: patient.encounterDatetime,
+          encounterDatetime: moment(patient.encounterDatetime).format("DD - MM - YYYY"),
           location: patient.location.description,
         };
       });
@@ -43,13 +44,13 @@ const PatientInfo = (props) => {
       _.reverse(results);
       setEncounters(results);
     });
-  })
+  },[]);
+
   return (
     <div className="bx--grid--full-width">
       <Row>
         <div className="bx--col-lg-2"></div>
         <div className="bx--col-lg-12" id="patientInfoForm">
-          
           <div id="patientinfo">
             <DataTable
               rows={encounters.slice(
