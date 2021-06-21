@@ -8,13 +8,12 @@ function Login() {
   const [Username, setUsername] = useState("");
   const [Password, setPassword] = useState("");
   const history = useHistory();
+  const btoa = require("btoa");
 
   const HandleAuth = async (e) => {
     e.preventDefault();
-    const token = Buffer.from(`${Username}:${Password}`, "utf8").toString(
-      "base64"
-    );
 
+    const token = btoa(`${Username}:${Password}`);
     await LoginUser(token).then((resp) => {
       if (resp.authenticated === true) {
         sessionStorage.setItem("user", token);
