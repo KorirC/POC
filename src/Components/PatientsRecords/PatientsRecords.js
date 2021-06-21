@@ -19,16 +19,14 @@ import { PatientsData } from "../PatientsData/PatientsData";
 import "../PatientsRecords/PatientsRecords.scss";
 const headers = [
   { header: "UUId", key: "identifier" },
-  { header: "Display", key: "name" },
+  { header: "Name", key: "name" },
   { header: "Age", key: "age" },
   { header: "Birthdate", key: "dob" },
   { header: " Gender", key: "gender" },
-  { header: "Dead", key: "dead" },
-  { header: "Death Date", key: "deathdate" },
   { header: "Link", key: "link" },
 ];
-
-const PatientsRecords = ({ val }) => {
+const moment = require("moment");
+const PatientsRecords = () => {
   const [firstRowIndex, setFirstRowIndex] = useState(0);
   const [currentPageSize, setCurrentPageSize] = useState(5);
   const [searchTerm, setSearchTerm] = useState("");
@@ -49,9 +47,7 @@ const PatientsRecords = ({ val }) => {
             name: patient.person.display,
             age: patient.person.age,
             gender: patient.person.gender,
-            dob: patient.person.birthdate,
-            dead: patient.person.dead,
-            deathdate: patient.person.deathDate,
+            dob: moment(patient.person.birthdate).format("DD - MM - YYYY"),
             link: <Link to={`/Encounters/${patient.uuid}`}>Encounters</Link>,
           };
         });
