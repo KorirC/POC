@@ -17,9 +17,8 @@ import { useState } from "react";
 import { useHistory, Link } from "react-router-dom";
 import { PatientsData } from "../PatientsData/PatientsData";
 import "../PatientsRecords/PatientsRecords.scss";
-
 const headers = [
-  { header: "Identifier", key: "identifier" },
+  { header: "UUId", key: "identifier" },
   { header: "Display", key: "name" },
   { header: "Age", key: "age" },
   { header: "Birthdate", key: "dob" },
@@ -29,7 +28,7 @@ const headers = [
   { header: "Link", key: "link" },
 ];
 
-const PatientsRecords = () => {
+const PatientsRecords = ({ val }) => {
   const [firstRowIndex, setFirstRowIndex] = useState(0);
   const [currentPageSize, setCurrentPageSize] = useState(5);
   const [searchTerm, setSearchTerm] = useState("");
@@ -39,25 +38,30 @@ const PatientsRecords = () => {
 
   const handleChange = (e) => {
     e.preventDefault();
-    setSearchTerm(e.target.value);
 
-    PatientsData(searchTerm).then((resp) => {
-      const results = resp.map((patient) => {
-        return {
-          id: patient.uuid,
-          identifier: patient.person.uuid,
-          name: patient.person.display,
-          age: patient.person.age,
-          gender: patient.person.gender,
-          dob: patient.person.birthdate,
-          dead: patient.person.dead,
-          deathdate: patient.person.deathDate,
-          link: <Link to={`/Encounters/${patient.uuid}`}>Encounters</Link>,
-        };
-      });
-      setRows(results);
-    });
+    setSearchTerm(e.target.value);
+    searchTerm.length >= 3 ? (
+      PatientsData(searchTerm).then((resp) => {
+        const results = resp.map((patient) => {
+          return {
+            id: patient.uuid,
+            identifier: patient.person.uuid,
+            name: patient.person.display,
+            age: patient.person.age,
+            gender: patient.person.gender,
+            dob: patient.person.birthdate,
+            dead: patient.person.dead,
+            deathdate: patient.person.deathDate,
+            link: <Link to={`/Encounters/${patient.uuid}`}>Encounters</Link>,
+          };
+        });
+        setRows(results);
+      })
+    ) : (
+      <></>
+    );
   };
+
   const load = () => {
     history.push("/PatientDetails");
   };
