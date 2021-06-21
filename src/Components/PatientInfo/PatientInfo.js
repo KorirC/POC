@@ -1,7 +1,6 @@
 import "../PatientInfo/PatientInfo.scss";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
-  Button,
   Row,
   DataTable,
   TableContainer,
@@ -19,7 +18,6 @@ import { PatientEncounters } from "../Encounters/PatientEncounters";
 const _ = require("lodash");
 
 const headers = [
-  { header: "Id", key: "uuid" },
   { header: "Type of Encounter", key: "display" },
   { header: "Date", key: "encounterDatetime" },
   { header: "Location", key: "location" },
@@ -29,10 +27,8 @@ const PatientInfo = (props) => {
   const [firstRowIndex, setFirstRowIndex] = useState(0);
   const [currentPageSize, setCurrentPageSize] = useState(5);
 
-  const handleChange = (e) => {
-    e.preventDefault();
+  useEffect(()=>{
     const id = props.match.params.id;
-
     PatientEncounters(id).then((resp) => {
       const results = resp.map((patient) => {
         return {
@@ -47,17 +43,13 @@ const PatientInfo = (props) => {
       _.reverse(results);
       setEncounters(results);
     });
-  };
+  })
   return (
     <div className="bx--grid--full-width">
       <Row>
         <div className="bx--col-lg-2"></div>
         <div className="bx--col-lg-12" id="patientInfoForm">
-          <div id="patientinfo">
-            <Button kind="secondary" onClick={handleChange}>
-              Display Encounters
-            </Button>
-          </div>
+          
           <div id="patientinfo">
             <DataTable
               rows={encounters.slice(
@@ -83,7 +75,7 @@ const PatientInfo = (props) => {
                       {rows.length === 0 ? (
                         <TableRow>
                           <TableCell colSpan="8">
-                            <h5>No Encounter Record</h5>
+                            <h5>No Encounter Records Found</h5>
                           </TableCell>
                         </TableRow>
                       ) : (
