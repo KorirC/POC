@@ -18,14 +18,24 @@ const PatientDetails = () => {
           <div class="bx--row">
             <div class="bx--col"></div>
             <div class="bx--col" id="patientform">
-              <h2>Add New Patient</h2>
+              <h2>Create a New Person</h2>
               <hr />
 
               <div id="patientinputs">
                 <TextInput
-                  labelText="Name: "
+                  labelText="GivenName: "
                   invalidText="Invalid error message."
-                  placeholder="Enter name"
+                  placeholder="Enter given name"
+                  required
+                />
+              </div>
+
+              <div id="patientinputs">
+                <TextInput
+                  labelText="FamilyName: "
+                  invalidText="Invalid error message."
+                  placeholder="Enter family name"
+                  required
                 />
               </div>
 
@@ -53,22 +63,22 @@ const PatientDetails = () => {
                 </Select>
               </div>
 
-              <div id="patientinputs">
+              {/* <div id="patientinputs">
                 <TextInput
                   labelText="Phone Number: "
                   invalidText="Invalid error message."
                   placeholder="Enter phone number"
                 />
-              </div>
+              </div> */}
 
-              <div id="patientinputs">
+              {/* <div id="patientinputs">
                 <TextInput
                   labelText="Health Center: "
                   invalidText="Invalid error message."
                   placeholder="Enter Location"
                   type="text"
                 />
-              </div>
+              </div> */}
 
               <div id="patientinputs">
                 <Button size="default" kind="secondary">
