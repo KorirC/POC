@@ -26,6 +26,7 @@ const headers = [
   { header: "Link", key: "link" },
 ];
 const moment = require("moment");
+
 const PatientsRecords = () => {
   const [firstRowIndex, setFirstRowIndex] = useState(0);
   const [currentPageSize, setCurrentPageSize] = useState(5);

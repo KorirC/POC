@@ -27,9 +27,9 @@ const PatientInfo = (props) => {
   const [encounters, setEncounters] = useState([]);
   const [firstRowIndex, setFirstRowIndex] = useState(0);
   const [currentPageSize, setCurrentPageSize] = useState(5);
-  
+  const id = props.match.params.id;
   useEffect(() => {
-    const id = props.match.params.id;
+   
     PatientEncounters(id).then((resp) => {
       const results = resp.map((patient) => {
         return {
