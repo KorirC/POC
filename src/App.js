@@ -1,33 +1,42 @@
 import "./App.scss";
 import Login from "./Components/Login/login";
-import React from "react";
+import React, { useState } from "react";
 import {
   Header,
   HeaderName,
   HeaderGlobalBar,
   HeaderGlobalAction,
 } from "carbon-components-react";
-import {BrowserRouter as Router, Route, Switch, Link } from "react-router-dom";
+import { Switch, Route, Link } from "react-router-dom";
 import PatientDetails from "./Components/PatientDetails/PatientDetails";
 import PatientsRecords from "./Components/PatientsRecords/PatientsRecords";
 import PatientInfo from "./Components/PatientInfo/PatientInfo";
 import { useHistory } from "react-router-dom";
+import ProtectedRoutes from "./Components/ProtectedRoutes/ProtectedRoutes";
 
 function App() {
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
   const history = useHistory();
-  // const user = sessionStorage.getItem("user");
 
   return (
-    <div>
-      <Router>
+    <div className="App">
       <Switch>
-        <Route exact path="/" component={Login} />
-        <Route exact path="/Logout"></Route>
-        <Route exact path="/PatientDetails" component={PatientDetails} />
-        <Route exact path="/PatientsRecords" component={PatientsRecords} />
+        <Route exact path="/">
+          <Login setIsAuthenticated={setIsAuthenticated} />
+        </Route>
         <Route path="/Encounters/:id" component={PatientInfo} />
+        <ProtectedRoutes
+          path="/PatientsRecords"
+          component={PatientsRecords}
+          isAuthenticated={isAuthenticated}
+        />
+        <ProtectedRoutes
+          path="/PatientDetails"
+          component={PatientDetails}
+          isAuthenticated={isAuthenticated}
+        />
       </Switch>
-      </Router>
+
       <Header aria-label="Platform Name">
         <HeaderName element={Link} to="/" prefix="POC">
           [Point Of Care]
@@ -36,11 +45,12 @@ function App() {
           <HeaderGlobalAction
             aria-label="App Switcher"
             onClick={() => {
+              setIsAuthenticated(false);
               sessionStorage.clear();
               history.push("/");
             }}
           >
-            <i className="fa fa-sign-out" aria-hidden="true">Logout</i>
+            <Link>Logout</Link>
           </HeaderGlobalAction>
         </HeaderGlobalBar>
       </Header>
