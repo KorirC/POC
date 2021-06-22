@@ -4,18 +4,19 @@ import { LoginUser } from "../Auth/Auth";
 import { useHistory } from "react-router-dom";
 import "./login.scss";
 
-function Login() {
+const Login = ({setIsAuthenticated}) => {
   const [Username, setUsername] = useState("");
   const [Password, setPassword] = useState("");
-  const history = useHistory();
-  const btoa = require("btoa");
 
+  const btoa = require("btoa");
+  const history = useHistory();
   const HandleAuth = async (e) => {
     e.preventDefault();
 
     const token = btoa(`${Username}:${Password}`);
     await LoginUser(token).then((resp) => {
       if (resp.authenticated === true) {
+        setIsAuthenticated(true);
         sessionStorage.setItem("user", token);
         history.push("/PatientsRecords");
       } else {
