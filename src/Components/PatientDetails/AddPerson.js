@@ -17,7 +17,7 @@ const AddPerson = async (data) => {
 
   try {
     return axios(config)
-      .then((response) => console.log(response))
+      .then((response) =>{return response})
       .catch((error) => console.log(error));
   } catch (error) {
     console.log(error);
