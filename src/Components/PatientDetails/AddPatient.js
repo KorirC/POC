@@ -6,7 +6,7 @@ const user = sessionStorage.getItem("user");
 const AddPatient = async (data) => {
   let config = {
     method: "POST",
-    url: apiURL + "person",
+    url: apiURL + "patient",
     headers: {
       "Content-Type": "application/json",
       Authorization: `Basic ${user}`,
@@ -18,7 +18,7 @@ const AddPatient = async (data) => {
   try {
     return axios(config)
       .then((response) => console.log(response))
-      .catch((error) => console.log(error));
+      .catch((error) => console.error(error));
   } catch (error) {
     console.log(error);
   }
