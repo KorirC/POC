@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import "./CreatePerson.scss";
+import React, { useEffect, useState } from "react";
+import "./scss/CreatePerson.scss";
 import {
   Form,
   TextInput,
@@ -9,13 +9,15 @@ import {
   DatePickerInput,
   Button,
 } from "carbon-components-react";
+import { useHistory } from "react-router-dom";
 import { AddPerson } from "./AddPerson";
 const CreatePerson = () => {
   const [givenName, setGivenName] = useState("");
   const [familyName, setFamilyName] = useState("");
   const [gender, setGender] = useState("");
   const [birthDate, setBirthDate] = useState("01/31/1985");
-
+  // const [personData, setPersonData] = useState("");
+  const history = useHistory();
   const handleChange = (date) => {
     let selectedDate = new Date(date).toLocaleDateString("fr-CA");
     setBirthDate(selectedDate);
@@ -31,9 +33,19 @@ const CreatePerson = () => {
         { address1: "", cityVillage: "", country: "Kenya", postalCode: "" },
       ],
     });
-            //using axios
-    AddPerson(data);
-    console.log(data);
+    //using axios
+    AddPerson(data).then((resp) => {
+       console.log(resp.data.uuid);
+      // setPersonData(resp.data.uuid);
+      // console.log(personData);
+      history.push({
+        pathname: "/CreatePatient",
+        id:resp.data.uuid,
+        state:  resp.data,
+      });
+      
+    });
+    
   };
 
   return (
@@ -94,10 +106,18 @@ const CreatePerson = () => {
                   <SelectItem text="Other" value="O" />
                 </Select>
               </div>
-              <div id="patientinputs">
-                <Button size="default" kind="secondary" type="submit">
-                  Create Person 
-                </Button>
+              <div className="bx--row">
+                <div className="bx--col" id="patientinputs">
+                  <Button size="default" kind="secondary" type="submit">
+                    Create Person
+                  </Button>
+                </div>
+                {/* <div className="bx--col" id="patientinputs">
+                  <Button size="default" kind="default" >
+                  
+                  </Button>
+                  
+                </div> */}
               </div>
             </div>
             <div class="bx--col"></div>
