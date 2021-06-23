@@ -13,7 +13,7 @@ const PatientsData = (searchTerm) => {
       return res.data.results;
     })
     .catch((error) => {
-      console.error(error);
+      console.log(error);
     });
   };
   
