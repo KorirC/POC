@@ -10,8 +10,10 @@ import {
   Button,
   Row,
 } from "carbon-components-react";
-import { useLocation } from "react-router-dom";
+import { useLocation, useHistory } from "react-router-dom";
 import { AddPatient } from "./AddPatient";
+import { IdentifierType } from "./IdentifierType";
+import { LocationName } from "./Location";
 const moment = require("moment");
 
 const CreatePatient = () => {
@@ -20,13 +22,38 @@ const CreatePatient = () => {
   const [identifier, setIdentifier] = useState("");
   const [identifierType, setIdentifierType] = useState("");
   const [area, setLocation] = useState("");
+  const [identifierResults, setIdentifierResults] = useState([]);
+  const [locationResults, setLocationResults] = useState([]);
   const location = useLocation();
+  const history = useHistory();
 
   useEffect(() => {
     setPerson([location.state]);
     setPersonId(location.id);
-  }, [location.id, location.state]);
 
+    //fetch identifiertypes
+    IdentifierType().then((resp) => {
+      const results = resp.map((identifier) => {
+        return {
+          id: identifier.uuid,
+          value: identifier.display,
+        };
+      });
+      setIdentifierResults(results);
+    });
+
+    //fetch locations
+    LocationName().then((resp) => {
+      const results = resp.map((identifier) => {
+        return {
+          id: identifier.uuid,
+          value: identifier.display,
+        };
+      });
+      setLocationResults(results);
+    });
+  }, [location.id, location.state]);
+  
   const handleSubmit = (e) => {
     e.preventDefault();
 
@@ -41,8 +68,12 @@ const CreatePatient = () => {
         },
       ],
     });
-    
-    AddPatient(data);
+
+    AddPatient(data).then((resp) => {
+      history.push({
+        pathname: "/PatientsRecords",
+      });
+    });
   };
   return (
     <>
@@ -64,7 +95,6 @@ const CreatePatient = () => {
                       readOnly
                     />
                   </div>
-
                   <div className="bx--col" id="patientinputs">
                     <TextInput
                       labelText="MiddleName: "
@@ -90,9 +120,9 @@ const CreatePatient = () => {
                       labelText="Gender: "
                       defaultValue={item.gender}
                     >
-                      {/* <SelectItem text="Female" value="F" />
+                      <SelectItem text="Female" value="F" />
                       <SelectItem text="Male" value="M" />
-                      <SelectItem text="Other" value="O" /> */}
+                      <SelectItem text="Other" value="O" />
                     </Select>
                   </div>
                   <div className="bx--col" id="patientinputs">
@@ -131,68 +161,54 @@ const CreatePatient = () => {
                   </div>
                   <div className="bx--col" id="patientinputs">
                     <Select
-                      defaultValue="placeholder-item"
-                      id="select"
-                      invalidText="This is an invalid error message."
                       labelText="IdentifierType: "
-                      required
                       onChange={(e) => setIdentifierType(e.target.value)}
                     >
-                      <SelectItem
-                        text="Kenya National ID Number"
-                        value="ID Number"
-                      />
-                      <SelectItem text="NHIF Number" value="NHIF Number" />
+                      {identifierResults.map((item) => (
+                        <SelectItem
+                          text={item.value}
+                          key={item.id}
+                          value={item.id}
+                        />
+                      ))}
                     </Select>
                   </div>
                   <div className="bx--col" id="patientinputs">
                     <Select
-                      defaultValue="placeholder-item"
-                      id="select"
-                      invalidText="This is an invalid error message."
-                      labelText="IdentifierLocation: "
-                      required
+                      labelText="Location: "
                       onChange={(e) => setLocation(e.target.value)}
                     >
-                      <SelectItem text="Location-1" value="Location-1" />
-                      <SelectItem text="Location-2" value="Location-2" />
-                      <SelectItem text="Location-3" value="Location-3" />
+                      {locationResults.map((item) => (
+                        <SelectItem
+                          text={item.value}
+                          key={item.id}
+                          value={item.id}
+                        />
+                      ))}
                     </Select>
                   </div>
                 </Row>
                 <Row>
                   <div className="bx--col" id="patientinputs">
-                    <TextInput
-                      labelText="Address: "
-                      readOnly
-                    />
+                    <TextInput labelText="Address: " readOnly />
                   </div>
 
                   <div className="bx--col" id="patientinputs">
-                    <TextInput
-                      labelText="Town/Village: "
-                      readOnly
-                    />
+                    <TextInput labelText="Town/Village: " readOnly />
                   </div>
                   <div className="bx--col" id="patientinputs">
-                    <TextInput
-                      labelText="Postalcode: "
-                      readOnly
-                    />
+                    <TextInput labelText="Postalcode: " readOnly />
                   </div>
                 </Row>
                 <Row>
                   <div className="bx--col" id="patientinputs">
-                    <TextInput
-                      labelText="County: "
-                      readOnly
-                    />
+                    <TextInput labelText="County: " readOnly />
                   </div>
 
                   <div className="bx--col" id="patientinputs">
                     <TextInput
                       labelText="Country: "
-                      readonly
+                      readOnly
                       value={item.country}
                     />
                   </div>
