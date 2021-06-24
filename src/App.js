@@ -39,15 +39,13 @@ function App() {
         />
       </Switch>
 
-      <Header aria-label="Platform Name">
+      <Header aria-label="Platform Name" id="header">
         <HeaderName element={Link} to="/" prefix="POC">
           [Point Of Care]
         </HeaderName>
-        <HeaderName element={Link} to="/CreatePatient" prefix="POC">
-          [Create Patient]
-        </HeaderName>
+        
         <HeaderGlobalBar>
-          <HeaderGlobalAction
+          <HeaderGlobalAction id="logout"
             aria-label="App Switcher"
             onClick={() => {
               setIsAuthenticated(false);
@@ -55,7 +53,8 @@ function App() {
               history.push("/");
             }}
           >
-            <Link>Logout</Link>
+            Logout
+            {/* <Link>Logout</Link> */}
           </HeaderGlobalAction>
         </HeaderGlobalBar>
       </Header>
