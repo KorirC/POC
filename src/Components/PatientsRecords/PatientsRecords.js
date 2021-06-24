@@ -13,6 +13,7 @@ import {
   Button,
   Pagination,
 } from "carbon-components-react";
+// import Catch from 'react-error-boundary';
 import { useState } from "react";
 import { useHistory, Link } from "react-router-dom";
 import { PatientsData } from "../PatientsData/PatientsData";
@@ -49,19 +50,22 @@ const PatientsRecords = () => {
             age: patient.person.age,
             gender: patient.person.gender,
             dob: moment(patient.person.birthdate).format("DD - MM - YYYY"),
-            link: <Link to={`/Encounters/${patient.uuid}`}>Encounters</Link>,
+            Encounters: <Link to={`/Encounters/${patient.uuid}`}>Encounters</Link>,
           };
         });
         setRows(results);
       })
     ) : (
-      <></>
+      <></> 
     );
   };
 
   const load = () => {
     history.push("/PatientDetails");
   };
+//  const myBoundary = Catch(function MyErrorBoundary(props, error) {
+//    if(!error){
+
 
   return (
     <>
@@ -71,6 +75,7 @@ const PatientsRecords = () => {
           <div className="bx--col-lg-12" id="dt">
             <Search
               id="search-1"
+              labelText=" "
               placeHolderText="Search Patient"
               value={searchTerm}
               onChange={handleChange}
@@ -104,7 +109,7 @@ const PatientsRecords = () => {
                       {rows.length === 0 ? (
                         <TableRow>
                           <TableCell colSpan="8">
-                            <h5>Patient Record Not found</h5>
+                            <h5>No records found</h5>
                           </TableCell>
                         </TableRow>
                       ) : (
@@ -144,5 +149,12 @@ const PatientsRecords = () => {
       </div>
     </>
   );
+// }else{
+//   <div className="error-screen">
+//         <h2>An error has occured</h2>
+//         <h4>{error.message}</h4>
+//   </div>
+// }
+// }) 
 };
 export default PatientsRecords;

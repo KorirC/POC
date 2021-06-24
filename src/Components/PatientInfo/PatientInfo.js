@@ -44,7 +44,7 @@ const PatientInfo = (props) => {
       _.reverse(results);
       setEncounters(results);
     });
-  },[]);
+  },[id]);
 
   return (
     <div className="bx--grid--full-width">
@@ -76,7 +76,7 @@ const PatientInfo = (props) => {
                       {rows.length === 0 ? (
                         <TableRow>
                           <TableCell colSpan="8">
-                            <h5>No Encounter Records Found</h5>
+                            <h5>No Records Found</h5>
                           </TableCell>
                         </TableRow>
                       ) : (
