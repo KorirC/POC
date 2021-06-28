@@ -26,7 +26,7 @@ function App() {
           <Login setIsAuthenticated={setIsAuthenticated} />
         </Route>
         <Route path="/Encounters/:id" component={PatientInfo} />
-        <Route path="/CreatePatient" component={CreatePatient} />
+        
         <ProtectedRoutes
           path="/PatientsRecords"
           component={PatientsRecords}
@@ -37,6 +37,12 @@ function App() {
           component={CreatePerson}
           isAuthenticated={isAuthenticated}
         />
+        <ProtectedRoutes
+          path="/CreatePatient"
+          component={CreatePatient}
+          isAuthenticated={isAuthenticated}
+        />
+        
       </Switch>
 
       <Header aria-label="Platform Name" id="header">
@@ -54,7 +60,6 @@ function App() {
             }}
           >
             Logout
-            {/* <Link>Logout</Link> */}
           </HeaderGlobalAction>
         </HeaderGlobalBar>
       </Header>
