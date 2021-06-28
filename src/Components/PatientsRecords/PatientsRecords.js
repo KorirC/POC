@@ -24,7 +24,7 @@ const headers = [
   { header: "Age", key: "age" },
   { header: "Birthdate", key: "dob" },
   { header: " Gender", key: "gender" },
-  { header: "Link", key: "link" },
+  { header: "Encounters", key: "encounters" },
 ];
 const moment = require("moment");
 
@@ -49,8 +49,8 @@ const PatientsRecords = () => {
             name: patient.person.display,
             age: patient.person.age,
             gender: patient.person.gender,
-            dob: moment(patient.person.birthdate).format("DD - MM - YYYY"),
-            Encounters: <Link to={`/Encounters/${patient.uuid}`}>Encounters</Link>,
+            dob: moment(patient.person.birthdate).format("DD/MM/YYYY"),
+            encounters: (<Link to={`/Encounters/${patient.uuid}`}>Encounters</Link>),
           };
         });
         setRows(results);

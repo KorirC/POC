@@ -3,12 +3,12 @@ import React, { useState } from "react";
 import { LoginUser } from "../Auth/Auth";
 import { useHistory } from "react-router-dom";
 import "./login.scss";
+const btoa = require("btoa");
 
 const Login = ({setIsAuthenticated}) => {
   const [Username, setUsername] = useState("");
   const [Password, setPassword] = useState("");
 
-  const btoa = require("btoa");
   const history = useHistory();
   const HandleAuth = async (e) => {
     e.preventDefault();
@@ -27,7 +27,7 @@ const Login = ({setIsAuthenticated}) => {
 
   return (
     <>
-      <Form onSubmit={HandleAuth}>
+      <Form onSubmit={HandleAuth} data-testid="login">
         <div className="bx--grid--full-width">
           <div className="bx--row">
             <div className="bx--col"></div>
@@ -39,22 +39,24 @@ const Login = ({setIsAuthenticated}) => {
               <TextInput
                 labelText="User name: "
                 id="name"
+                data-testid="name"
                 required
                 placeholder="Enter user name"
                 onChange={(e) => setUsername(e.target.value)}
               />
               <TextInput.PasswordInput
-                id="Password"
+                 id="password"
+                data-testid="password"
                 hidePasswordLabel="Hide password"
                 invalidText="A valid value is required"
-                labelText="Password"
+                labelText="Password: "
                 required
                 placeholder="Enter Password"
                 showPasswordLabel="Show password"
                 onChange={(e) => setPassword(e.target.value)}
               />
               <br />
-              <Button size="default" kind="secondary" type="submit">
+              <Button  size="default" kind="secondary" type="submit" >
                 Login
               </Button>
             </div>

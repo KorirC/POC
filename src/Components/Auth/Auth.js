@@ -13,7 +13,6 @@ export const LoginUser = (credentials) => {
       return res.data;
     })
     .catch((error) => {
-      alert("Failed");
       console.error(error);
     });
 };

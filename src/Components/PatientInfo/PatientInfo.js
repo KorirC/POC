@@ -12,7 +12,6 @@ import {
   TableCell,
   Pagination,
 } from "carbon-components-react";
-// import Moment from 'moment';
 import { PatientEncounters } from "../Encounters/PatientEncounters";
 
 const _ = require("lodash");
@@ -36,7 +35,7 @@ const PatientInfo = (props) => {
           id: patient.uuid,
           uuid: patient.uuid,
           display: patient.display,
-          encounterDatetime: moment(patient.encounterDatetime).format("DD - MM - YYYY"),
+          encounterDatetime: moment(patient.encounterDatetime).format("DD/MM/YYYY"),
           location: patient.location.description,
         };
       });
@@ -98,7 +97,7 @@ const PatientInfo = (props) => {
                 backwardText="Previous page"
                 forwardText="Next page"
                 itemsPerPageText="Items per page:"
-                pageNumberText="Page Number"
+                pageNumberText="Page Number" 
                 pageSize={currentPageSize}
                 pageSizes={[5, 10, 15, 20, 25]}
                 totalItems={encounters.length}

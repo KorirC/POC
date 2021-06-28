@@ -52,7 +52,9 @@ const CreatePerson = () => {
           <div class="bx--row">
             <div class="bx--col"></div>
             <div class="bx--col" id="patientform">
-              <h2>Create a New Person</h2>
+              <h2>Create a New Patient</h2>
+              <br/>
+              <h6>Person Form</h6>
               <hr />
 
               <div id="patientinputs">
@@ -102,7 +104,7 @@ const CreatePerson = () => {
                   <SelectItem text="Male" value="M" />
                   <SelectItem text="Other" value="O" />
                 </Select>
-              </div>
+              </div> 
               <div className="bx--row">
                 <div className="bx--col" id="patientinputs">
                   <Button size="default" kind="secondary" type="submit">

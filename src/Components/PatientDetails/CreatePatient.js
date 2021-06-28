@@ -144,7 +144,7 @@ const CreatePatient = () => {
                         placeholder="mm/dd/yyyy"
                         labelText="Date of Birth: "
                         type="text"
-                      />
+                      /> 
                     </DatePicker>
                   </div>
                 </Row>
@@ -162,6 +162,7 @@ const CreatePatient = () => {
                   <div className="bx--col" id="patientinputs">
                     <Select
                       labelText="IdentifierType: "
+                      required
                       onChange={(e) => setIdentifierType(e.target.value)}
                     >
                       {identifierResults.map((item) => (
@@ -176,6 +177,7 @@ const CreatePatient = () => {
                   <div className="bx--col" id="patientinputs">
                     <Select
                       labelText="Location: "
+                      required
                       onChange={(e) => setLocation(e.target.value)}
                     >
                       {locationResults.map((item) => (
