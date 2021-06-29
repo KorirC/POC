@@ -1,20 +1,15 @@
 import axios from "axios";
+import AuthHeaders from "../API/AuthHeaders";
 import apiURL from "../API/Config";
-
-const user = sessionStorage.getItem("user");
 
 const LocationName =  () => {
   let config = {
     method: "GET",
     url: apiURL + "location?&v=custom:(uuid,display)",
-    headers: {
-      Authorization: `Basic ${user}`,
-    },
-    
   };
 
   try {
-    return axios(config)
+    return axios(config,AuthHeaders)
       .then((response) =>{return response.data.results})
       .catch((error) => console.log(error));
   } catch (error) {

@@ -1,14 +1,10 @@
 import axios from "axios";
+import AuthHeaders from "../API/AuthHeaders";
 import apiURL from "../API/Config";
 
-const user = sessionStorage.getItem("user");
 const PatientsData = (searchTerm) => {
   return axios
-    .get(apiURL + `patient?q=${searchTerm}&v=default`, {
-      headers: {
-        Authorization: `Basic ${user}`,
-      },
-    })
+    .get(apiURL + `patient?q=${searchTerm}&v=default`,AuthHeaders)
     .then((res) => {
       return res.data.results;
     })

@@ -1,23 +1,22 @@
 import axios from "axios";
+import AuthHeaders from "../API/AuthHeaders";
 import apiURL from "../API/Config";
-
-const user = sessionStorage.getItem("user");
 
 const AddPerson = async (data) => {
   let config = {
     method: "POST",
     url: apiURL + "person",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Basic ${user}`,
-    },
+    headers: AuthHeaders,
     data: data,
     json: true,
+    
   };
-
+console.log(config);
   try {
     return axios(config)
-      .then((response) =>{return response})
+      .then((response) => {
+        return response;
+      })
       .catch((error) => console.log(error));
   } catch (error) {
     console.log(error);
@@ -25,3 +24,12 @@ const AddPerson = async (data) => {
 };
 
 export { AddPerson };
+
+// let config = {
+//   method: "POST",
+//   url: apiURL + "person",
+//   headers:AuthHeaders,
+//   data: data,
+//   json: true,
+  
+// };

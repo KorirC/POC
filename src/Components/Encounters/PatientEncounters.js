@@ -1,17 +1,13 @@
 import axios from "axios";
+import AuthHeaders from "../API/AuthHeaders";
 import apiURL from "../API/Config";
 
-const user =sessionStorage.getItem("user");
 const PatientEncounters = (id) => {
   return axios
     .get(
       apiURL +
         `/encounter?patient=${id}&v=custom:(uuid,display,encounterDatetime,location)`,
-      {
-        headers: {
-          Authorization: `Basic ${user}`,
-        },
-      }
+      AuthHeaders
     )
     .then((res) => {
       return res.data.results;
