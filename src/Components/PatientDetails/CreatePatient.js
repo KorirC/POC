@@ -66,10 +66,13 @@ const CreatePatient = () => {
           location: `${area}`,
           preferred: false,
         },
-      ],
+      ]
     });
 
-    AddPatient(data).then((resp) => {
+    // console.log(data);
+    AddPatient(data)
+    .then((resp) => {
+      // console.log(resp.data);
       history.push({
         pathname: "/PatientsRecords",
       });
@@ -163,12 +166,14 @@ const CreatePatient = () => {
                     <Select
                       labelText="IdentifierType: "
                       required
+                      value={identifierType}
                       onChange={(e) => setIdentifierType(e.target.value)}
                     >
-                      {identifierResults.map((item) => (
+                      {identifierResults.map((item,index) => (
+                        // console.log(item.value),
                         <SelectItem
                           text={item.value}
-                          key={item.id}
+                          key={index}
                           value={item.id}
                         />
                       ))}
