@@ -7,15 +7,12 @@ import {
   TableHeader,
   TableBody,
   TableCell,
-  TableToolbar,
-  TableToolbarContent,
   Search,
   Button,
-  Pagination,
 } from "carbon-components-react";
-// import Catch from 'react-error-boundary';
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useHistory, Link } from "react-router-dom";
+import PagePagination from "../Pagination/Pagination";
 import { PatientsData } from "../PatientsData/PatientsData";
 import "../PatientsRecords/PatientsRecords.scss";
 const headers = [
@@ -33,6 +30,7 @@ const PatientsRecords = () => {
   const [currentPageSize, setCurrentPageSize] = useState(5);
   const [searchTerm, setSearchTerm] = useState("");
   const [rows, setRows] = useState([]);
+  const [show, setShow] = useState(false);
 
   const history = useHistory();
 
@@ -50,22 +48,28 @@ const PatientsRecords = () => {
             age: patient.person.age,
             gender: patient.person.gender,
             dob: moment(patient.person.birthdate).format("DD/MM/YYYY"),
-            encounters: (<Link to={`/Encounters/${patient.uuid}`}>Encounters</Link>),
+            encounters: (
+              <Link to={`/Encounters/${patient.uuid}`}>Encounters</Link>
+            ),
           };
         });
         setRows(results);
       })
     ) : (
-      <></> 
+      <></>
     );
   };
 
+  useEffect(()=>{
+    if (rows.length) {
+      setShow(true);
+    }
+  },[rows.length])
   const load = () => {
     history.push("/PatientDetails");
   };
-//  const myBoundary = Catch(function MyErrorBoundary(props, error) {
-//    if(!error){
-
+  //  const myBoundary = Catch(function MyErrorBoundary(props, error) {
+  //    if(!error){
 
   return (
     <>
@@ -73,6 +77,9 @@ const PatientsRecords = () => {
         <div className="bx--row">
           <div className="bx--col-lg-2"></div>
           <div className="bx--col-lg-12" id="dt">
+            <Button onClick={load} size="sm" kind="secondary">
+              Add new
+            </Button>
             <Search
               id="search-1"
               labelText=" "
@@ -80,81 +87,74 @@ const PatientsRecords = () => {
               value={searchTerm}
               onChange={handleChange}
             />
-
-            <DataTable
-              id="dataTable"
-              rows={rows.slice(firstRowIndex, firstRowIndex + currentPageSize)}
-              headers={headers}
-              isSortable
-              render={({ rows, headers, getHeaderProps }) => (
-                <TableContainer title="Patients List">
-                  <TableToolbar>
-                    <TableToolbarContent>
-                      <Button onClick={load} size="sm" kind="secondary">
-                        Add new
-                      </Button>
-                    </TableToolbarContent>
-                  </TableToolbar>
-                  <Table useZebraStyles>
-                    <TableHead>
-                      <TableRow>
-                        {headers.map((header) => (
-                          <TableHeader {...getHeaderProps({ header })}>
-                            {header.header}
-                          </TableHeader>
-                        ))}
-                      </TableRow>
-                    </TableHead>
-                    <TableBody>
-                      {rows.length === 0 ? (
+            {show ? (
+              <>
+              <DataTable
+                id="dataTable"
+                rows={rows.slice(
+                  firstRowIndex,
+                  firstRowIndex + currentPageSize
+                )}
+                headers={headers}
+                isSortable
+                render={({ rows, headers, getHeaderProps }) => (
+                  <TableContainer title="Patients List">
+                    <Table useZebraStyles>
+                      <TableHead>
                         <TableRow>
-                          <TableCell colSpan="8">
-                            <h5>No records found</h5>
-                          </TableCell>
+                          {headers.map((header) => (
+                            <TableHeader {...getHeaderProps({ header })}>
+                              {header.header}
+                            </TableHeader>
+                          ))}
                         </TableRow>
-                      ) : (
-                        rows.map((row) => (
-                          <TableRow key={row.id}>
-                            {row.cells.map((cell) => (
-                              <TableCell key={cell.id}>{cell.value}</TableCell>
-                            ))}
+                      </TableHead>
+                      <TableBody>
+                        {rows.length === 0 ? (
+                          <TableRow>
+                            <TableCell colSpan="8">
+                              <h5>No records found</h5>
+                            </TableCell>
                           </TableRow>
-                        ))
-                      )}
-                    </TableBody>
-                  </Table>
-                </TableContainer>
-              )}
-            />
+                        ) : (
+                          rows.map((row) => (
+                            <TableRow key={row.id}>
+                              {row.cells.map((cell) => (
+                                <TableCell key={cell.id}>
+                                  {cell.value}
+                                </TableCell>
+                              ))}
+                            </TableRow>
+                          ))
+                        )}
+                      </TableBody>
+                    </Table>
+                  </TableContainer>
+                )}
+              />
+           
             <div style={{ width: "100%" }}>
-              <Pagination
-                backwardText="Previous page"
-                forwardText="Next page"
-                itemsPerPageText="Items per page:"
-                pageNumberText="Page Number"
-                pageSize={currentPageSize}
-                pageSizes={[5, 10, 15, 20, 25]}
+              <PagePagination
                 totalItems={rows.length}
-                onChange={({ page, pageSize }) => {
-                  if (pageSize !== currentPageSize) {
-                    setCurrentPageSize(pageSize);
-                  }
-                  setFirstRowIndex(pageSize * (page - 1));
-                }}
+                setFirstRowIndex={setFirstRowIndex}
+                setCurrentPageSize={setCurrentPageSize}
+                currentPageSize={currentPageSize}
               />
             </div>
+            </>
+             ) : null}
           </div>
           <div className="bx--col-lg-2"></div>
         </div>
       </div>
     </>
   );
-// }else{
-//   <div className="error-screen">
-//         <h2>An error has occured</h2>
-//         <h4>{error.message}</h4>
-//   </div>
-// }
-// }) 
+  // }else{
+  //   <div className="error-screen">
+  //         <h2>An error has occured</h2>
+  //         <h4>{error.message}</h4>
+  //   </div>
+  // }
+  // })
 };
 export default PatientsRecords;
