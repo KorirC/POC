@@ -18,7 +18,6 @@ import CreatePatient from "./Components/PatientDetails/CreatePatient";
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const history = useHistory();
-
   return (
     <div className="App">
       <Switch>
@@ -26,7 +25,7 @@ function App() {
           <Login setIsAuthenticated={setIsAuthenticated} />
         </Route>
         <Route path="/Encounters/:id" component={PatientInfo} />
-        
+
         <ProtectedRoutes
           path="/PatientsRecords"
           component={PatientsRecords}
@@ -42,16 +41,16 @@ function App() {
           component={CreatePatient}
           isAuthenticated={isAuthenticated}
         />
-        
       </Switch>
 
       <Header aria-label="Platform Name" id="header">
         <HeaderName element={Link} to="/" prefix="POC">
           [Point Of Care]
         </HeaderName>
-        
+
         <HeaderGlobalBar>
-          <HeaderGlobalAction id="logout"
+          <HeaderGlobalAction
+            id="logout"
             aria-label="App Switcher"
             onClick={() => {
               setIsAuthenticated(false);

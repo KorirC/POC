@@ -56,7 +56,7 @@ const Login = ({setIsAuthenticated}) => {
                 onChange={(e) => setPassword(e.target.value)}
               />
               <br />
-              <Button  size="default" kind="secondary" type="submit" >
+              <Button  size="default" kind="secondary" type="submit" data-testid="submit">
                 Login
               </Button>
             </div>

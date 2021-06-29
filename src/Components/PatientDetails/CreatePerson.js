@@ -47,11 +47,11 @@ const CreatePerson = () => {
 
   return (
     <>
-      <div class="bx--grid--full-width">
+      <div className="bx--grid--full-width">
         <Form onSubmit={handleSubmit}>
-          <div class="bx--row">
-            <div class="bx--col"></div>
-            <div class="bx--col" id="patientform">
+          <div className="bx--row">
+            <div className="bx--col"></div>
+            <div className="bx--col" id="patientform">
               <h2>Create a New Patient</h2>
               <br/>
               <h6>Person Form</h6>
@@ -59,6 +59,7 @@ const CreatePerson = () => {
 
               <div id="patientinputs">
                 <TextInput
+                  id="gname"
                   labelText="GivenName: "
                   invalidText="Invalid error message."
                   placeholder="Enter given name"
@@ -69,6 +70,7 @@ const CreatePerson = () => {
 
               <div id="patientinputs">
                 <TextInput
+                  id="fname"
                   labelText="FamilyName: "
                   invalidText="Invalid error message."
                   placeholder="Enter family name"
@@ -114,7 +116,7 @@ const CreatePerson = () => {
                 
               </div>
             </div>
-            <div class="bx--col"></div>
+            <div className="bx--col"></div>
           </div>
         </Form>
       </div>
