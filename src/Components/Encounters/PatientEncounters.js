@@ -2,18 +2,18 @@ import axios from "axios";
 import AuthHeaders from "../API/AuthHeaders";
 import apiURL from "../API/Config";
 
-const PatientEncounters = (id) => {
-  return axios
-    .get(
+const PatientEncounters =  async (id) => {
+  try {
+    const res = await axios.get(
       apiURL +
-        `/encounter?patient=${id}&v=custom:(uuid,display,encounterDatetime,location)`,
+      `/encounter?patient=${id}&v=custom:(uuid,display,encounterDatetime,location)`,
       AuthHeaders
-    )
-    .then((res) => {
-      return res.data.results;
-    })
-    .catch((error) => {
-      console.error(error);
-    });
+    );
+    return res.data.results;
+  } catch (error) {
+    console.log(error);
+  }
 };
 export { PatientEncounters };
+
+PatientEncounters("react");
