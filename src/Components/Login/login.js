@@ -30,8 +30,8 @@ const Login = ({setIsAuthenticated}) => {
       <Form onSubmit={HandleAuth} data-testid="login">
         <div className="bx--grid--full-width">
           <div className="bx--row">
-            <div className="bx--col"></div>
-            <div className="bx--col" id="loginform">
+            <div className="bx--col col-sm-2"></div>
+            <div className="bx--col bx--col-md-6 col-sm" id="loginform">
               <h2>Login</h2>
               <hr />
               <br />
@@ -60,7 +60,7 @@ const Login = ({setIsAuthenticated}) => {
                 Login
               </Button>
             </div>
-            <div className="bx--col"></div>
+            <div className="bx--col col-sm-2"></div>
           </div>
         </div>
       </Form>
