@@ -1,15 +1,16 @@
-import { Form, TextInput, Button } from "carbon-components-react";
+import { Form, TextInput, Button,InlineNotification} from "carbon-components-react";
 import React, { useState } from "react";
 import { LoginUser } from "../Auth/Auth";
 import { useHistory } from "react-router-dom";
 import "./login.scss";
 const btoa = require("btoa");
 
-const Login = ({setIsAuthenticated}) => {
+const Login = ({ setIsAuthenticated }) => {
   const [Username, setUsername] = useState("");
   const [Password, setPassword] = useState("");
-
+  const [error, setError] = useState("");
   const history = useHistory();
+
   const HandleAuth = async (e) => {
     e.preventDefault();
 
@@ -20,7 +21,7 @@ const Login = ({setIsAuthenticated}) => {
         sessionStorage.setItem("user", token);
         history.push("/PatientsRecords");
       } else {
-        alert("Failed");
+        setError("Wrong username or password");
       }
     });
   };
@@ -45,7 +46,7 @@ const Login = ({setIsAuthenticated}) => {
                 onChange={(e) => setUsername(e.target.value)}
               />
               <TextInput.PasswordInput
-                 id="password"
+                id="password"
                 data-testid="password"
                 hidePasswordLabel="Hide password"
                 invalidText="A valid value is required"
@@ -56,7 +57,27 @@ const Login = ({setIsAuthenticated}) => {
                 onChange={(e) => setPassword(e.target.value)}
               />
               <br />
-              <Button  size="default" kind="secondary" type="submit" data-testid="submit">
+              {error && (
+                <div>
+                  <InlineNotification
+                  className="notification--error"
+                    kind="error"
+                    iconDescription="describes the close button"
+                    subtitle={
+                      <span>
+                        <h6>{error}</h6>
+                      </span>
+                    }
+                    title="Error!!"
+                  />
+                </div>
+              )}
+              <Button
+                size="default"
+                kind="secondary"
+                type="submit"
+                data-testid="submit"
+              >
                 Login
               </Button>
             </div>
@@ -66,5 +87,5 @@ const Login = ({setIsAuthenticated}) => {
       </Form>
     </>
   );
-}
+};
 export default Login;
