@@ -4,36 +4,32 @@ import { PatientEncounters } from "../Encounters/PatientEncounters";
 jest.mock("axios");
 
 describe("fetchData", () => {
-  it("fetches successfully data from an API", async () => {
-    const data = {
-      data: {
-        hits: [
-          {
-            objectID: "1",
-            title: "a",
-          },
-          {
-            objectID: "2",
-            title: "b",
-          },
-        ],
-      },
-    };
+test("fetches data successfully from an API", async () => {
+  const data = {
+    data: {
+      results: [
+        {
+          objectID: "1",
+          title: "a",
+        },
+        {
+          objectID: "2",
+          title: "b",
+        },
+      ],
+    },
+  };
 
-   await axios.get.mockImplementationOnce(() => Promise.resolve(data));
+  axios.get.mockImplementationOnce(() => Promise.resolve(data));
+  await expect(PatientEncounters("react")).resolves.toEqual(data.data.results);
+});
 
-    // eslint-disable-next-line jest/valid-expect
-    expect(PatientEncounters("react")).resolves.toEqual(data);
-  });
+// test("fetches erroneously data from an API", async () => {
+//   const errorMessage = "Network Error";
+//   axios.get.mockImplementationOnce(() => {
+//     return Promise.reject(new Error(errorMessage));
+//   });
+//   await expect(PatientEncounters("react")).rejects.toThrow(errorMessage);
+// });
 
-    it('fetches erroneously data from an API', async () => {
-      const errorMessage = 'Network Error';
-
-     await axios.get.mockImplementationOnce(() =>
-        Promise.reject(new Error(errorMessage)),
-      );
-
-       // eslint-disable-next-line jest/valid-expect
-       expect(PatientEncounters('react')).rejects.toThrow(errorMessage);
-    });
 });
