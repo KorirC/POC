@@ -1,12 +1,7 @@
 import React from "react";
-import {
-  render,
-  fireEvent,
-  screen,
-  act,
-} from "@testing-library/react";
+import { render, fireEvent, screen, waitFor } from "@testing-library/react";
 import Login from "./login";
-// jest.mock("./login");
+// jest.mock("Login");1
 
 // it("if form is submitted and inputs modifiable", async () => {
 //   const { getByTestId } = render(<Login />);
@@ -31,20 +26,22 @@ describe("Login render Page", () => {
 
 describe("Form behaviour", () => {
   it("should submit when form inputs contain text", async () => {
-    const { getByTestId } = render(<Login />);
+    // const mockSave = jest.fn();
+    const { getByTestId } = render(<Login  />);
 
-    await act(async () => {
-      fireEvent.change(screen.getByTestId("name"), {
-        target: { value: "testuser" },
-      });
-
-      fireEvent.change(screen.getByTestId("password"), {
-        target: { value: "Ampath123" },
-      });
+    fireEvent.change(screen.getByTestId("name"), {
+      target: { value: "testuser" },
     });
-
-    await act(async () => {
-      fireEvent.submit(getByTestId("login"));
+    fireEvent.change(screen.getByTestId("password"), {
+      target: { value: "Ampath123" },
     });
+    fireEvent.submit(getByTestId("submit"));
+
+    // await waitFor(() =>
+    //   expect(mockSave).toHaveBeenCalledWith({
+    //     name: "testuser",
+    //     password: "Ampath123",
+    //   })
+    // );
   });
 });
