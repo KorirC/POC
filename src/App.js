@@ -7,7 +7,7 @@ import {
   HeaderGlobalBar,
   HeaderGlobalAction,
 } from "carbon-components-react";
-import { Switch, Route, Link } from "react-router-dom";
+import { HashRouter as Router,Switch, Route, Link } from "react-router-dom";
 import CreatePerson from "./Components/PatientDetails/CreatePerson";
 import PatientsRecords from "./Components/PatientsRecords/PatientsRecords";
 import PatientInfo from "./Components/PatientInfo/PatientInfo";
@@ -19,12 +19,13 @@ function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const history = useHistory();
   return (
+    <Router>
     <div className="App">
       <Switch>
         <Route exact path="/">
-          <Login setIsAuthenticated={setIsAuthenticated} />
+          <Login setIsAuthenticated={setIsAuthenticated}/>
         </Route>
-        <Route path="/Encounters/:id" component={PatientInfo} />
+        <Route path="/Encounters/:id" data-testid="PatientInfo" component={PatientInfo} />
 
         <ProtectedRoutes
           path="/PatientsRecords"
@@ -63,6 +64,7 @@ function App() {
         </HeaderGlobalBar>
       </Header>
     </div>
+    </Router>
   );
 }
 
