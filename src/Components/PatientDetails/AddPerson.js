@@ -12,7 +12,7 @@ const AddPerson = async (data) => {
     
   };
 console.log(config);
-  try {
+  try {   
     return axios(config)
       .then((response) => {
         return response;
