@@ -6,11 +6,11 @@ import { MemoryRouter } from 'react-router';
 
 jest.mock("./Components/Login/login");
 jest.mock("./Components/PatientInfo/PatientInfo");
-test('renders learn react link', () => {
+test('renders learn react link', async () => {
   // render(<App />);
   Login.mockImplementation(()=><div>Login</div>);
   PatientInfo.mockImplementation(()=><div>PatientInfo</div>);  
-  const component = render(
+  render(
     <MemoryRouter>
       <App/>
     </MemoryRouter>
@@ -19,5 +19,4 @@ test('renders learn react link', () => {
   const linkElement = screen.getByText(/Logout/i);
   expect(linkElement).toBeInTheDocument();
   expect(screen.getByText(/Login/i)).toBeInTheDocument();
-  // expect(component).toHaveLength(1);
 });

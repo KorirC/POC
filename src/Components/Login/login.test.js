@@ -1,23 +1,11 @@
 import React from "react";
-import { render, fireEvent, screen, waitFor } from "@testing-library/react";
-import Login from "./login";
-// jest.mock("Login");1
-
-// it("if form is submitted and inputs modifiable", async () => {
-//   const { getByTestId } = render(<Login />);
-
-//   fireEvent.change(getByTestId("name"), { target: { value: "testuser" } }); // invoke handleChange
-//   // fireEvent.change(getByTestId("password"), { target: { value: "Ampath123" } }); // invoke handleChangeq
-//   // fireEvent.submit(getByTestId("login"));
-//   // expect(spy.mock.calls).toEqual([[{ name: "testuser" }]]); // Test if handleChange works
-//   expect(spy).toHaveBeenCalled();
-
-//   spy.mockClear();
-// });
+import { render, fireEvent, screen, } from "@testing-library/react";
+// import Button from "./login";
+import Form from "./login";
 
 describe("Login render Page", () => {
   it("renders the 2 input fields and button", () => {
-    const { getByTestId } = render(<Login />);
+    const { getByTestId } = render(<Form />);
     expect(getByTestId("name")).toBeInTheDocument();
     expect(getByTestId("password")).toBeInTheDocument();
     expect(getByTestId("submit")).toBeInTheDocument();
@@ -26,22 +14,31 @@ describe("Login render Page", () => {
 
 describe("Form behaviour", () => {
   it("should submit when form inputs contain text", async () => {
-    // const mockSave = jest.fn();
-    const { getByTestId } = render(<Login  />);
-
-    fireEvent.change(screen.getByTestId("name"), {
+    const mocksubmit = jest.fn();
+    const { getByTestId } = render(<Form onSubmit={mocksubmit}/>);
+    const name = screen.getByTestId("name");
+    fireEvent.change(name, {
       target: { value: "testuser" },
     });
+    expect(name.value).toBe("testuser");
+
     fireEvent.change(screen.getByTestId("password"), {
       target: { value: "Ampath123" },
     });
-    fireEvent.submit(getByTestId("submit"));
-
-    // await waitFor(() =>
-    //   expect(mockSave).toHaveBeenCalledWith({
-    //     name: "testuser",
-    //     password: "Ampath123",
-    //   })
-    // );
+    fireEvent.submit(getByTestId("login"));
+   
+    // expect(mocksubmit).toHaveBeenCalledTimes(20)
   });
+
+  // it("button", async () => {
+  //   const mocksubmit = jest.fn();
+    
+  //    render(<Button onClick={mocksubmit}>h</Button>);
+  //    const button= screen.getByText(/Test/i)
+  //   expect(button).toBeInTheDocument();
+  //   fireEvent.click(button)
+   
+  //   // expect(mocksubmit).toHaveBeenCalledTimes(20)
+  // });
+
 });

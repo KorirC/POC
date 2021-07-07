@@ -64,7 +64,7 @@ const CreatePatient = () => {
           identifier: `${identifier}`,
           identifierType: `${identifierType}`,
           location: `${area}`,
-          preferred: false,
+          preferred: true,
         },
       ]
     });

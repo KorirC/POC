@@ -1,4 +1,9 @@
-import { Form, TextInput, Button,InlineNotification} from "carbon-components-react";
+import {
+  Form,
+  TextInput,
+  Button,
+  InlineNotification,
+} from "carbon-components-react";
 import React, { useState } from "react";
 import { LoginUser } from "../Auth/Auth";
 import { useHistory } from "react-router-dom";
@@ -27,7 +32,6 @@ const Login = ({ setIsAuthenticated }) => {
   };
 
   return (
-    <>
       <Form onSubmit={HandleAuth} data-testid="login">
         <div className="bx--grid--full-width">
           <div className="bx--row">
@@ -60,7 +64,7 @@ const Login = ({ setIsAuthenticated }) => {
               {error && (
                 <div>
                   <InlineNotification
-                  className="notification--error"
+                    className="notification--error"
                     kind="error"
                     iconDescription="describes the close button"
                     subtitle={
@@ -80,12 +84,13 @@ const Login = ({ setIsAuthenticated }) => {
               >
                 Login
               </Button>
+              
             </div>
             <div className="bx--col col-sm-2"></div>
           </div>
         </div>
       </Form>
-    </>
+    
   );
 };
 export default Login;

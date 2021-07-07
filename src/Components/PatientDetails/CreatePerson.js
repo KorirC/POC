@@ -11,7 +11,8 @@ import {
 } from "carbon-components-react";
 import { useHistory } from "react-router-dom";
 import { AddPerson } from "./AddPerson";
-const CreatePerson = () => {
+
+function CreatePerson(){
   const [givenName, setGivenName] = useState("");
   const [familyName, setFamilyName] = useState("");
   const [gender, setGender] = useState("");
@@ -34,21 +35,19 @@ const CreatePerson = () => {
     });
     
     AddPerson(data).then((resp) => {
-      //  console.log(resp.data.uuid);
       history.push({
         pathname: "/CreatePatient",
         id:resp.data.uuid,
         state:resp.data,
       });
-      
     });
     
   };
 
-  return (
+  return ( 
     <>
       <div className="bx--grid--full-width">
-        <Form onSubmit={handleSubmit}>
+        <Form onSubmit={handleSubmit} data-testid="form">
           <div className="bx--row">
             <div className="bx--col"></div>
             <div className="bx--col" id="patientform">
@@ -60,6 +59,7 @@ const CreatePerson = () => {
               <div id="patientinputs">
                 <TextInput
                   id="gname"
+                  data-testid="gname"
                   labelText="GivenName: "
                   invalidText="Invalid error message."
                   placeholder="Enter given name"
@@ -71,6 +71,7 @@ const CreatePerson = () => {
               <div id="patientinputs">
                 <TextInput
                   id="fname"
+                  data-testid="fname"
                   labelText="FamilyName: "
                   invalidText="Invalid error message."
                   placeholder="Enter family name"
@@ -81,6 +82,7 @@ const CreatePerson = () => {
 
               <div id="patientinputs">
                 <DatePicker
+                  data-testid="datepicker"
                   dateFormat="d/m/Y"
                   datePickerType="single"
                   onChange={handleChange}
@@ -96,6 +98,7 @@ const CreatePerson = () => {
 
               <div id="patientinputs">
                 <Select
+                  data-testid="gender"
                   defaultValue="placeholder-item"
                   id="select"
                   invalidText="This is an invalid error message."
@@ -109,7 +112,7 @@ const CreatePerson = () => {
               </div> 
               <div className="bx--row">
                 <div className="bx--col" id="patientinputs">
-                  <Button size="default" kind="secondary" type="submit">
+                  <Button size="default" kind="secondary" type="submit" data-testid="btnSubmit">
                     Create Person
                   </Button>
                 </div>
