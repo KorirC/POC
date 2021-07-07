@@ -36,8 +36,9 @@ const PatientsRecords = () => {
 
   const handleChange = (e) => {
     e.preventDefault();
-
-    setSearchTerm(e.target.value);
+    if (e.target.value.match("^[a-zA-Z ]*$") != null) {
+      setSearchTerm(e.target.value);
+    }
     searchTerm.length >= 3 ? (
       PatientsData(searchTerm).then((resp) => {
         const results = resp.map((patient) => {
@@ -60,16 +61,14 @@ const PatientsRecords = () => {
     );
   };
 
-  useEffect(()=>{
+  useEffect(() => {
     if (rows.length) {
       setShow(true);
     }
-  },[rows.length])
+  }, [rows.length]);
   const load = () => {
     history.push("/PatientDetails");
   };
-  //  const myBoundary = Catch(function MyErrorBoundary(props, error) {
-  //    if(!error){
 
   return (
     <>
@@ -89,72 +88,65 @@ const PatientsRecords = () => {
             />
             {show ? (
               <>
-              <DataTable
-                id="dataTable"
-                rows={rows.slice(
-                  firstRowIndex,
-                  firstRowIndex + currentPageSize
-                )}
-                headers={headers}
-                isSortable
-                render={({ rows, headers, getHeaderProps }) => (
-                  <TableContainer title="Patients List">
-                    <Table useZebraStyles>
-                      <TableHead>
-                        <TableRow>
-                          {headers.map((header) => (
-                            <TableHeader {...getHeaderProps({ header })}>
-                              {header.header}
-                            </TableHeader>
-                          ))}
-                        </TableRow>
-                      </TableHead>
-                      <TableBody>
-                        {rows.length === 0 ? (
+                <DataTable
+                  id="dataTable"
+                  rows={rows.slice(
+                    firstRowIndex,
+                    firstRowIndex + currentPageSize
+                  )}
+                  headers={headers}
+                  isSortable
+                  render={({ rows, headers, getHeaderProps }) => (
+                    <TableContainer title="Patients List">
+                      <Table useZebraStyles>
+                        <TableHead>
                           <TableRow>
-                            <TableCell colSpan="8">
-                              <h5>No records found</h5>
-                            </TableCell>
+                            {headers.map((header) => (
+                              <TableHeader {...getHeaderProps({ header })}>
+                                {header.header}
+                              </TableHeader>
+                            ))}
                           </TableRow>
-                        ) : (
-                          rows.map((row) => (
-                            <TableRow key={row.id}>
-                              {row.cells.map((cell) => (
-                                <TableCell key={cell.id}>
-                                  {cell.value}
-                                </TableCell>
-                              ))}
+                        </TableHead>
+                        <TableBody>
+                          {rows.length === 0 ? (
+                            <TableRow>
+                              <TableCell colSpan="8">
+                                <h5>No records found</h5>
+                              </TableCell>
                             </TableRow>
-                          ))
-                        )}
-                      </TableBody>
-                    </Table>
-                  </TableContainer>
-                )}
-              />
-           
-            <div style={{ width: "100%" }}>
-              <PagePagination
-                totalItems={rows.length}
-                setFirstRowIndex={setFirstRowIndex}
-                setCurrentPageSize={setCurrentPageSize}
-                currentPageSize={currentPageSize}
-              />
-            </div>
-            </>
-             ) : null}
+                          ) : (
+                            rows.map((row) => (
+                              <TableRow key={row.id}>
+                                {row.cells.map((cell) => (
+                                  <TableCell key={cell.id}>
+                                    {cell.value}
+                                  </TableCell>
+                                ))}
+                              </TableRow>
+                            ))
+                          )}
+                        </TableBody>
+                      </Table>
+                    </TableContainer>
+                  )}
+                />
+
+                <div style={{ width: "100%" }}>
+                  <PagePagination
+                    totalItems={rows.length}
+                    setFirstRowIndex={setFirstRowIndex}
+                    setCurrentPageSize={setCurrentPageSize}
+                    currentPageSize={currentPageSize}
+                  />
+                </div>
+              </>
+            ) : null}
           </div>
           <div className="bx--col-lg-2"></div>
         </div>
       </div>
     </>
   );
-  // }else{
-  //   <div className="error-screen">
-  //         <h2>An error has occured</h2>
-  //         <h4>{error.message}</h4>
-  //   </div>
-  // }
-  // })
 };
 export default PatientsRecords;
