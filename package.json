@@ -52,6 +52,7 @@
     ]
   },
   "devDependencies": {
+    "@testing-library/react-hooks": "^7.0.1",
     "enzyme-adapter-react-16": "^1.15.6"
   }
 }
