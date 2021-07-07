@@ -16,4 +16,4 @@ const PatientEncounters = async (id) => {
 };
 export { PatientEncounters };
 
-PatientEncounters("react");
+// PatientEncounters("react");
