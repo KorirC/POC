@@ -1,4 +1,4 @@
-Language: node_js
+Language: react
 node_js: - 11.6.0
 cache: yarn
 
