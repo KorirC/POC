@@ -1,5 +1,5 @@
 --- 
-Language: react
+Language: node_js
 branch: master
 cache: npm
 deploy: ~
