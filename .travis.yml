@@ -6,7 +6,7 @@ deploy: ~
 github-token: $GITHUB-TOKEN
 install: "npm install"
 node_js: "11.6.0"
-provider: pages
+provider: npm
 script: 
   - "npm test"
   - "npm run build"
